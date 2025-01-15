@@ -133,6 +133,7 @@ export const useTaskStore = create<State>()(
           }
         },
         createColumn: (columnName: string) => {
+          if (!columnName) return
           const { columns } = get()
           if (
             columns.find(
