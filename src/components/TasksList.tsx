@@ -38,7 +38,7 @@ export const TasksList = ({ column, tasks }: Props) => {
           : ''
       }`}
     >
-      <div className='relative p-4 border-2 border-white rounded-lg'>
+      <div className='relative p-4 border-2 border-slate-950 dark:border-slate-100 rounded-lg'>
         <button
           onClick={() => deleteColumn(column.id)}
           className='absolute right-1 top-1'

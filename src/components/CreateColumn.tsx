@@ -18,8 +18,8 @@ export const CreateColumn = () => {
   }
   return (
     <CreateDialog>
-      <form onSubmit={handleSubmit} className='flex flex-col gap-2 pt-4'>
-        <p className='font-semibold'>Crear Columna</p>
+      <form onSubmit={handleSubmit} className='flex flex-col gap-2 pt-4 pb-4'>
+        <p className='font-semibold text-lg dark:text-white'>Crear Columna</p>
         <input
           type='text'
           id='name'
@@ -30,7 +30,7 @@ export const CreateColumn = () => {
         />
         <button
           type='submit'
-          className='p-2 bg-slate-600 rounded-lg text-white'
+          className='p-2 bg-slate-600 rounded-lg text-white dark:bg-slate-800'
         >
           Crear
         </button>
