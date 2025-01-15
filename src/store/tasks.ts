@@ -12,7 +12,6 @@ const INITIAL_COLUMNS: Column[] = [
     name: 'coming'
   },
   { id: 'done', name: 'done' },
-  { id: 'cancel', name: 'cancel' },
   { id: 'archive', name: 'archive' }
 ]
 const INITIAL_TASKS: Task[] = [
@@ -67,6 +66,7 @@ interface State {
   activeColumn: Column | null
   activeTask: Task | null
   updateActive: (current: CurrentItem | null) => void
+  createColumn: (columnName: string) => void
 }
 export const useTaskStore = create<State>()(
   persist(
@@ -131,6 +131,12 @@ export const useTaskStore = create<State>()(
             set({ activeTask: current.task })
             return
           }
+        },
+        createColumn: (columnName: string) => {
+          const { columns } = get()
+          if (columns.find((column) => column.id === columnName)) return
+          const newColumns = [...columns, { name: columnName, id: columnName }]
+          set({ columns: newColumns })
         }
       }
     },

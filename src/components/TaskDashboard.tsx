@@ -10,6 +10,7 @@ import { SortableContext } from '@dnd-kit/sortable'
 import { useTaskStore } from '../store/tasks'
 import { CurrentItem } from '../interfaces/currentItem'
 import { OverlayPortal } from './OverlayPortal'
+import { CreateDialog } from './CreateDialog'
 
 export const TaskDashboard = () => {
   const { columns, tasks, changeColumns, changeTasks, updateActive } =
@@ -59,6 +60,7 @@ export const TaskDashboard = () => {
               />
             ))}
           </SortableContext>
+          <CreateDialog />
           <OverlayPortal />
         </DndContext>
       </div>
