@@ -30,7 +30,7 @@ export const CreateColumn = () => {
         />
         <button
           type='submit'
-          className='p-2 bg-slate-500 rounded-lg text-white'
+          className='p-2 bg-slate-600 rounded-lg text-white'
         >
           Crear
         </button>

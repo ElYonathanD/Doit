@@ -67,6 +67,7 @@ interface State {
   activeTask: Task | null
   updateActive: (current: CurrentItem | null) => void
   createColumn: (columnName: string) => void
+  deleteColumn: (columnId: string) => void
 }
 export const useTaskStore = create<State>()(
   persist(
@@ -144,6 +145,14 @@ export const useTaskStore = create<State>()(
             return
           const newColumns = [...columns, { name: columnName, id: columnName }]
           set({ columns: newColumns })
+        },
+        deleteColumn: (columnId) => {
+          if (!columnId) return
+          const { columns, tasks } = get()
+          const newColumns = columns.filter((column) => column.id !== columnId)
+          const newTask = tasks.filter((task) => task.status !== columnId)
+          set({ columns: newColumns })
+          set({ tasks: newTask })
         }
       }
     },
