@@ -134,7 +134,13 @@ export const useTaskStore = create<State>()(
         },
         createColumn: (columnName: string) => {
           const { columns } = get()
-          if (columns.find((column) => column.id === columnName)) return
+          if (
+            columns.find(
+              (column) =>
+                column.id.toLocaleLowerCase() === columnName.toLocaleLowerCase()
+            )
+          )
+            return
           const newColumns = [...columns, { name: columnName, id: columnName }]
           set({ columns: newColumns })
         }

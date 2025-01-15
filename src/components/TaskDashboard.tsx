@@ -10,7 +10,7 @@ import { SortableContext } from '@dnd-kit/sortable'
 import { useTaskStore } from '../store/tasks'
 import { CurrentItem } from '../interfaces/currentItem'
 import { OverlayPortal } from './OverlayPortal'
-import { CreateDialog } from './CreateDialog'
+import { CreateColumn } from './CreateColumn'
 
 export const TaskDashboard = () => {
   const { columns, tasks, changeColumns, changeTasks, updateActive } =
@@ -43,6 +43,7 @@ export const TaskDashboard = () => {
     if (active.id === over.id) return
     changeTasks(active, over)
   }
+
   return (
     <main className='w-full bg-slate-300 dark:bg-gray-600'>
       <div className='flex gap-8 p-6 h-screen overflow-auto'>
@@ -60,7 +61,7 @@ export const TaskDashboard = () => {
               />
             ))}
           </SortableContext>
-          <CreateDialog />
+          <CreateColumn />
           <OverlayPortal />
         </DndContext>
       </div>
