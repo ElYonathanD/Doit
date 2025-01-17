@@ -150,13 +150,6 @@ export const useTaskStore = create<State>()(
         createColumn: (columnName: string) => {
           if (!columnName) return
           const { columns } = get()
-          if (
-            columns.find(
-              (column) =>
-                column.id.toLocaleLowerCase() === columnName.toLocaleLowerCase()
-            )
-          )
-            return
           const newColumns = [...columns, { name: columnName, id: columnName }]
           set({ columns: newColumns })
         },
@@ -170,6 +163,7 @@ export const useTaskStore = create<State>()(
         },
         createTask: (task: Task) => {
           const { tasks } = get()
+          if (!task) return
           const newTask = [...tasks, task]
           set({ tasks: newTask })
         },

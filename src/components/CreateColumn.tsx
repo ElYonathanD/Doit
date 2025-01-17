@@ -3,7 +3,7 @@ import { CreateDialog } from './CreateDialog'
 import { useTaskStore } from '../store/tasks'
 
 export const CreateColumn = () => {
-  const { createColumn } = useTaskStore((state) => state)
+  const { columns, createColumn } = useTaskStore((state) => state)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -11,6 +11,13 @@ export const CreateColumn = () => {
     if (inputRef.current?.value) {
       const columnName = inputRef.current.value.trim()
       if (columnName) {
+        if (
+          columns.find(
+            (column) =>
+              column.id.toLocaleLowerCase() === columnName.toLocaleLowerCase()
+          )
+        )
+          return
         createColumn(columnName)
         inputRef.current.value = ''
       }

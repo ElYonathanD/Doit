@@ -2,7 +2,7 @@ import { FormEvent, useState } from 'react'
 import { useTaskStore } from '../store/tasks'
 
 export const useFormTask = (columnId: string) => {
-  const { createTask } = useTaskStore((state) => state)
+  const { tasks, createTask } = useTaskStore((state) => state)
   const [formTask, setFormTask] = useState({
     title: '',
     desc: '',
@@ -32,6 +32,12 @@ export const useFormTask = (columnId: string) => {
       formTask.initialDate &&
       formTask.endDate
     ) {
+      if (
+        tasks.find(
+          (t) => t.id.toLocaleLowerCase() === formTask.title.toLocaleLowerCase()
+        )
+      )
+        return
       createTask({ ...formTask, id: formTask.title, status: columnId })
       setFormTask({
         title: '',
