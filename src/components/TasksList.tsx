@@ -54,7 +54,7 @@ export const TasksList = ({ column, tasks }: Props) => {
           {column.name}
         </h2>
       </div>
-      <ul>
+      <ul className='flex flex-col items-center'>
         <SortableContext items={tasksIds}>
           {tasks.map((task) => (
             <TaskCard key={task.id} task={task} />

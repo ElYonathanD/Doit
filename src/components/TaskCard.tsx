@@ -26,7 +26,7 @@ export const TaskCard = ({ task }: Props) => {
   return (
     <li
       ref={setNodeRef}
-      className={`text-sm sm:text-base bg-slate-100 mt-4 p-3 rounded-lg list-none relative dark:bg-gray-800 dark:text-white ${
+      className={`text-sm sm:text-base bg-slate-100 mt-4 p-3 rounded-lg list-none w-full relative dark:bg-gray-800 dark:text-white ${
         isDragging
           ? 'opacity-50 border-2 border-black dark:border-slate-100'
           : ''
