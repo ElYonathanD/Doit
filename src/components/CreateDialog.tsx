@@ -15,7 +15,7 @@ export const CreateDialog = ({ children }: Props) => {
     <>
       <button
         onClick={openDialog}
-        className='p-4 bg-slate-500 rounded-lg dark:bg-slate-800'
+        className='p-4 bg-slate-500 rounded-lg dark:bg-slate-800 '
         aria-label='Abrir diálogo de creación'
       >
         <Plus />

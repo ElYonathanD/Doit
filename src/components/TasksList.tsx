@@ -6,6 +6,7 @@ import { SortableContext, useSortable } from '@dnd-kit/sortable'
 import { useMemo } from 'react'
 import { Delete } from './icons/Delete'
 import { useTaskStore } from '../store/tasks'
+import { CreateTask } from './CreateTask'
 interface Props {
   tasks: Task[]
   column: Column
@@ -59,6 +60,7 @@ export const TasksList = ({ column, tasks }: Props) => {
             <TaskCard key={task.id} task={task} />
           ))}
         </SortableContext>
+        <CreateTask columnId={column.id} />
       </ul>
     </div>
   )

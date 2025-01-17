@@ -2,6 +2,8 @@ export interface Task {
   id: string
   title: string
   desc: string
-  date: string
+  initialDate: string
+  endDate: string
   status: string
+  priority: boolean
 }

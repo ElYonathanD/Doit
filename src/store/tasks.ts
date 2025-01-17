@@ -19,43 +19,55 @@ const INITIAL_TASKS: Task[] = [
     id: 'hacer1',
     title: 'hacer 1',
     desc: 'hacer algo',
-    date: '2021-10-10',
-    status: 'coming'
+    initialDate: '2021-10-10',
+    endDate: '2021-10-11',
+    status: 'coming',
+    priority: false
   },
   {
     id: 'hacer2',
     title: 'hacer 2',
     desc: 'hacer algo 2',
-    date: '2021-10-10 2',
-    status: 'coming'
+    initialDate: '2021-10-10',
+    endDate: '2021-10-11',
+    status: 'coming',
+    priority: false
   },
   {
     id: 'fix3',
     title: 'fix 3',
     desc: 'revisar 33',
-    date: '2021-10-10',
-    status: 'done'
+    initialDate: '2021-10-10',
+    endDate: '2021-10-11',
+    status: 'done',
+    priority: false
   },
   {
     id: 'hacer4',
     title: 'hacer 4',
     desc: 'revisar 33 2',
-    date: '2021-10-10 2',
-    status: 'done'
+    initialDate: '2021-10-10 2',
+    endDate: '2021-10-11',
+    status: 'done',
+    priority: false
   },
   {
     id: 'fix5',
     title: 'fix 5',
     desc: 'revisar 33',
-    date: '2021-10-10',
-    status: 'archive'
+    initialDate: '2021-10-10',
+    endDate: '2021-10-11',
+    status: 'archive',
+    priority: true
   },
   {
     id: 'hacer6',
     title: 'hacer 6',
     desc: 'revisar 33 2',
-    date: '2021-10-10 2',
-    status: 'done'
+    initialDate: '2021-10-10',
+    endDate: '2021-10-11',
+    status: 'done',
+    priority: true
   }
 ]
 interface State {
@@ -68,6 +80,7 @@ interface State {
   updateActive: (current: CurrentItem | null) => void
   createColumn: (columnName: string) => void
   deleteColumn: (columnId: string) => void
+  createTask: (task: Task) => void
 }
 export const useTaskStore = create<State>()(
   persist(
@@ -152,6 +165,11 @@ export const useTaskStore = create<State>()(
           const newColumns = columns.filter((column) => column.id !== columnId)
           const newTask = tasks.filter((task) => task.status !== columnId)
           set({ columns: newColumns })
+          set({ tasks: newTask })
+        },
+        createTask: (task: Task) => {
+          const { tasks } = get()
+          const newTask = [...tasks, task]
           set({ tasks: newTask })
         }
       }

@@ -24,7 +24,7 @@ export const Dialog = ({ isOpen, onClose, children }: Props) => {
   return (
     <dialog
       ref={dialogRef}
-      className='rounded-lg p-4 relative min-w-72 border-slate-950 dark:bg-slate-700 border-2  dark:border-slate-100'
+      className='rounded-lg p-8 relative min-w-72 dark:bg-slate-700'
       aria-labelledby='dialog-title'
     >
       <button

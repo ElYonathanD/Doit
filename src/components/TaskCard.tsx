@@ -34,7 +34,7 @@ export const TaskCard = ({ task }: Props) => {
     >
       <h3 className='font-bold text-left'>{task.title}</h3>
       <div className='flex justify-between'>
-        <p>{task.date}</p>
+        <p>{task.endDate}</p>
         <p>{task.status}</p>
       </div>
     </li>
