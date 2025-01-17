@@ -81,6 +81,7 @@ interface State {
   createColumn: (columnName: string) => void
   deleteColumn: (columnId: string) => void
   createTask: (task: Task) => void
+  deleteTask: (taskId: string) => void
 }
 export const useTaskStore = create<State>()(
   persist(
@@ -170,6 +171,12 @@ export const useTaskStore = create<State>()(
         createTask: (task: Task) => {
           const { tasks } = get()
           const newTask = [...tasks, task]
+          set({ tasks: newTask })
+        },
+        deleteTask: (taskId) => {
+          if (!taskId) return
+          const { tasks } = get()
+          const newTask = tasks.filter((task) => task.id !== taskId)
           set({ tasks: newTask })
         }
       }
