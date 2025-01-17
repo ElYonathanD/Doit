@@ -1,50 +1,8 @@
-import { FormEvent, useState } from 'react'
-import { useTaskStore } from '../store/tasks'
+import { useFormTask } from '../hooks/useFormTask'
 import { CreateDialog } from './CreateDialog'
 
 export const CreateTask = ({ columnId }: { columnId: string }) => {
-  const { createTask } = useTaskStore((state) => state)
-
-  const [formData, setFormData] = useState({
-    title: '',
-    desc: '',
-    initialDate: '',
-    endDate: '',
-    priority: false
-  })
-
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
-    const { name, value, type } = e.target
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]:
-        type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
-    }))
-  }
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault()
-    if (
-      formData.title &&
-      formData.desc &&
-      formData.initialDate &&
-      formData.endDate
-    ) {
-      createTask({ ...formData, id: formData.title, status: columnId })
-      setFormData({
-        title: '',
-        desc: '',
-        initialDate: '',
-        endDate: '',
-        priority: false
-      })
-    }
-  }
+  const { formTask, handleChange, handleSubmit } = useFormTask(columnId)
   return (
     <CreateDialog>
       <form
@@ -66,7 +24,7 @@ export const CreateTask = ({ columnId }: { columnId: string }) => {
             type='text'
             id='title'
             name='title'
-            value={formData.title}
+            value={formTask.title}
             onChange={handleChange}
             className='mt-1 p-2 w-full rounded-lg bg-gray-100 border border-gray-300 dark:bg-gray-700 dark:border-gray-600'
             placeholder='Revisar documentos'
@@ -84,7 +42,7 @@ export const CreateTask = ({ columnId }: { columnId: string }) => {
           <textarea
             id='desc'
             name='desc'
-            value={formData.desc}
+            value={formTask.desc}
             onChange={handleChange}
             className='mt-1 p-2 w-full rounded-lg bg-gray-100 border border-gray-300 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-400 focus:outline-none min-h-28 max-h-80 resize-y'
             placeholder='Los documentos de...'
@@ -105,7 +63,7 @@ export const CreateTask = ({ columnId }: { columnId: string }) => {
               type='date'
               id='initialDate'
               name='initialDate'
-              value={formData.initialDate}
+              value={formTask.initialDate}
               onChange={handleChange}
               className='mt-1 p-2 w-full rounded-lg bg-gray-100 border border-gray-300 dark:bg-gray-700 dark:border-gray-600'
               required
@@ -123,7 +81,7 @@ export const CreateTask = ({ columnId }: { columnId: string }) => {
               type='date'
               id='endDate'
               name='endDate'
-              value={formData.endDate}
+              value={formTask.endDate}
               onChange={handleChange}
               className='mt-1 p-2 w-full rounded-lg bg-gray-100 border border-gray-300 dark:bg-gray-700 dark:border-gray-600'
               required
@@ -136,7 +94,7 @@ export const CreateTask = ({ columnId }: { columnId: string }) => {
             type='checkbox'
             id='priority'
             name='priority'
-            checked={formData.priority}
+            checked={formTask.priority}
             onChange={handleChange}
             className='w-5 h-5 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600'
           />
