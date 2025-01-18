@@ -2,8 +2,9 @@ import { TasksList } from './TasksList'
 import { DndContext } from '@dnd-kit/core'
 import { SortableContext } from '@dnd-kit/sortable'
 import { OverlayPortal } from './OverlayPortal'
-import { CreateColumn } from './CreateColumn'
 import { UseDragAndDrop } from '../hooks/UseDragAndDrop'
+import { useRef } from 'react'
+import { FormColumn } from './FormColumn'
 
 export const TaskDashboard = () => {
   const {
@@ -14,6 +15,10 @@ export const TaskDashboard = () => {
     handleDragStart,
     handleDragOver
   } = UseDragAndDrop()
+
+  const dialogRef = useRef<HTMLDialogElement>(null)
+  const openDialog = () => dialogRef.current?.showModal()
+  const closeDialog = () => dialogRef.current?.close()
 
   return (
     <main className='w-full bg-slate-300 dark:bg-gray-600'>
@@ -32,7 +37,11 @@ export const TaskDashboard = () => {
               />
             ))}
           </SortableContext>
-          <CreateColumn />
+          <FormColumn
+            dialogRef={dialogRef}
+            openDialog={openDialog}
+            closeDialog={closeDialog}
+          />
           <OverlayPortal />
         </DndContext>
       </div>

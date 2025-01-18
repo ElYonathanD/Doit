@@ -3,10 +3,10 @@ import { Task } from '../interfaces/task'
 import { TaskCard } from './TaskCard'
 import { CSS } from '@dnd-kit/utilities'
 import { SortableContext, useSortable } from '@dnd-kit/sortable'
-import { useMemo } from 'react'
+import { useMemo, useRef } from 'react'
 import { Delete } from './icons/Delete'
 import { useTaskStore } from '../store/tasks'
-import { CreateTask } from './CreateTask'
+import { FormTask } from './FormTask'
 interface Props {
   tasks: Task[]
   column: Column
@@ -14,6 +14,10 @@ interface Props {
 
 export const TasksList = ({ column, tasks }: Props) => {
   const { deleteColumn } = useTaskStore((state) => state)
+  const dialogRef = useRef<HTMLDialogElement>(null)
+
+  const openDialog = () => dialogRef.current?.showModal()
+  const closeDialog = () => dialogRef.current?.close()
   const {
     setNodeRef,
     attributes,
@@ -60,7 +64,12 @@ export const TasksList = ({ column, tasks }: Props) => {
             <TaskCard key={task.id} task={task} />
           ))}
         </SortableContext>
-        <CreateTask columnId={column.id} />
+        <FormTask
+          columnId={column.id}
+          dialogRef={dialogRef}
+          openDialog={openDialog}
+          closeDialog={closeDialog}
+        />
       </ul>
     </div>
   )

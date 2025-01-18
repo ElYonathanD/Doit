@@ -1,7 +1,7 @@
 import { FormEvent, useState } from 'react'
 import { useTaskStore } from '../store/tasks'
 
-export const useFormTask = (columnId: string) => {
+export const useFormTask = (columnId: string, closeDialog: () => void) => {
   const { tasks, createTask } = useTaskStore((state) => state)
   const [formTask, setFormTask] = useState({
     title: '',
@@ -46,6 +46,7 @@ export const useFormTask = (columnId: string) => {
         endDate: '',
         priority: false
       })
+      closeDialog()
     }
   }
   return { formTask, handleChange, handleSubmit }
