@@ -1,23 +1,30 @@
 import { FormEvent, useState } from 'react'
 import { useTaskStore } from '../store/tasks'
+import { Task } from '../interfaces/task'
 
-export const useFormTask = (columnId: string, closeDialog: () => void) => {
-  const { tasks, createTask } = useTaskStore((state) => state)
-  const [formTask, setFormTask] = useState({
-    title: '',
-    desc: '',
-    initialDate: '',
-    endDate: '',
-    priority: false
-  })
-
+export const useFormTask = (
+  columnId: string,
+  closeDialog: () => void,
+  task?: Task
+) => {
+  const { createTask, editTask } = useTaskStore((state) => state)
+  const [formTask, setFormTask] = useState(
+    task || {
+      id: '',
+      title: '',
+      desc: '',
+      initialDate: '',
+      endDate: '',
+      status: '',
+      priority: false
+    }
+  )
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
     const { name, value, type } = e.target
-
     setFormTask((prev) => ({
       ...prev,
       [name]:
@@ -32,20 +39,21 @@ export const useFormTask = (columnId: string, closeDialog: () => void) => {
       formTask.initialDate &&
       formTask.endDate
     ) {
-      if (
-        tasks.find(
-          (t) => t.id.toLocaleLowerCase() === formTask.title.toLocaleLowerCase()
-        )
-      )
-        return
-      createTask({ ...formTask, id: formTask.title, status: columnId })
-      setFormTask({
-        title: '',
-        desc: '',
-        initialDate: '',
-        endDate: '',
-        priority: false
-      })
+      if (!task) {
+        createTask({ ...formTask, id: formTask.title, status: columnId })
+        setFormTask({
+          id: '',
+          title: '',
+          desc: '',
+          initialDate: '',
+          endDate: '',
+          status: '',
+          priority: false
+        })
+      } else {
+        editTask(formTask)
+      }
+
       closeDialog()
     }
   }

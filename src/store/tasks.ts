@@ -82,7 +82,7 @@ interface State {
   deleteColumn: (columnId: string) => void
   createTask: (task: Task) => void
   deleteTask: (taskId: string) => void
-  editTask: (taskId: string) => void
+  editTask: (task: Task) => void
 }
 export const useTaskStore = create<State>()(
   persist(
@@ -164,6 +164,12 @@ export const useTaskStore = create<State>()(
         },
         createTask: (task: Task) => {
           const { tasks } = get()
+          if (
+            tasks.find(
+              (t) => t.id.toLocaleLowerCase() === task.id.toLocaleLowerCase()
+            )
+          )
+            return
           if (!task) return
           const newTask = [...tasks, task]
           set({ tasks: newTask })
@@ -174,8 +180,11 @@ export const useTaskStore = create<State>()(
           const newTask = tasks.filter((task) => task.id !== taskId)
           set({ tasks: newTask })
         },
-        editTask: (taskId) => {
-          console.log(taskId)
+        editTask: (task) => {
+          const { tasks } = get()
+          const taskIndex = tasks.findIndex((t) => t.id === task.id)
+          tasks[taskIndex] = task
+          set({ tasks })
         }
       }
     },

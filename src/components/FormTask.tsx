@@ -19,9 +19,9 @@ export const FormTask = ({
 }: Props) => {
   const { formTask, handleChange, handleSubmit } = useFormTask(
     columnId,
-    closeDialog
+    closeDialog,
+    task
   )
-
   return (
     <>
       {!task && (
@@ -150,7 +150,7 @@ export const FormTask = ({
             type='submit'
             className='p-3 w-full bg-slate-600 text-white font-semibold rounded-lg hover:bg-slate-500 dark:bg-slate-700 dark:hover:bg-slate-900'
           >
-            Crear
+            {task ? 'Editar' : 'Crear'}
           </button>
         </form>
       </dialog>
