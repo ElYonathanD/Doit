@@ -16,9 +16,9 @@ export const TaskDashboard = () => {
     handleDragOver
   } = UseDragAndDrop()
 
-  const dialogRef = useRef<HTMLDialogElement>(null)
-  const openDialog = () => dialogRef.current?.showModal()
-  const closeDialog = () => dialogRef.current?.close()
+  const dialogRefColum = useRef<HTMLDialogElement>(null)
+  const openDialog = () => dialogRefColum.current?.showModal()
+  const closeDialog = () => dialogRefColum.current?.close()
 
   return (
     <main className='w-full bg-slate-300 dark:bg-gray-600'>
@@ -38,7 +38,7 @@ export const TaskDashboard = () => {
             ))}
           </SortableContext>
           <FormColumn
-            dialogRef={dialogRef}
+            dialogRefColum={dialogRefColum}
             openDialog={openDialog}
             closeDialog={closeDialog}
           />

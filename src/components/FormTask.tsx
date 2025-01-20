@@ -50,7 +50,7 @@ export const FormTask = ({
           className='flex flex-col gap-6 p-4 rounded-lg shadow-lg bg-white dark:bg-gray-800'
         >
           <p className='font-semibold text-xl text-center text-gray-800 dark:text-white'>
-            Crear Tarea
+            {task ? 'Editar' : 'Crear'} Tarea
           </p>
 
           <div>
@@ -58,7 +58,7 @@ export const FormTask = ({
               htmlFor='title'
               className='block text-left font-medium text-gray-700 dark:text-gray-300'
             >
-              Título Tarea
+              Título
             </label>
             <input
               type='text'

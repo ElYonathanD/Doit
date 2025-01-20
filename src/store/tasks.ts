@@ -83,6 +83,7 @@ interface State {
   createTask: (task: Task) => void
   deleteTask: (taskId: string) => void
   editTask: (task: Task) => void
+  editColumn: (column: Column) => void
 }
 export const useTaskStore = create<State>()(
   persist(
@@ -185,6 +186,12 @@ export const useTaskStore = create<State>()(
           const taskIndex = tasks.findIndex((t) => t.id === task.id)
           tasks[taskIndex] = task
           set({ tasks })
+        },
+        editColumn: (column) => {
+          const { columns } = get()
+          const columnIndex = columns.findIndex((c) => c.id === column.id)
+          columns[columnIndex] = column
+          set({ columns })
         }
       }
     },
