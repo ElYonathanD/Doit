@@ -27,10 +27,7 @@ export const FormColumn = ({
     if (columnName) {
       if (!column) {
         if (
-          columns.find(
-            (column) =>
-              column.id.toLocaleLowerCase() === columnName.toLocaleLowerCase()
-          )
+          columns.some((c) => c.id.toLowerCase() === columnName.toLowerCase())
         )
           return
         createColumn(columnName)

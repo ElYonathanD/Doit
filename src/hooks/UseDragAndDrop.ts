@@ -4,8 +4,9 @@ import { DragEndEvent, DragOverEvent, DragStartEvent } from '@dnd-kit/core'
 import { CurrentItem } from '../interfaces/currentItem'
 
 export const UseDragAndDrop = () => {
-  const { columns, tasks, changeColumns, changeTasks, updateActive } =
-    useTaskStore((state) => state)
+  const { columns, tasks, moveColumns, moveTask, updateActive } = useTaskStore(
+    (state) => state
+  )
 
   const columnsIds = useMemo(
     () => columns.map((column) => column.id),
@@ -21,7 +22,7 @@ export const UseDragAndDrop = () => {
 
     if (activeColumnId === overColumnId) return
     const isOverColumn = active.data.current?.type === 'Column'
-    if (isOverColumn) changeColumns(activeColumnId, overColumnId)
+    if (isOverColumn) moveColumns(activeColumnId, overColumnId)
   }
 
   const handleDragStart = (event: DragStartEvent) => {
@@ -32,7 +33,7 @@ export const UseDragAndDrop = () => {
     const { active, over } = event
     if (!over) return
     if (active.id === over.id) return
-    changeTasks(active, over)
+    moveTask(active, over)
   }
   return {
     tasks,

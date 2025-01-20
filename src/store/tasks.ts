@@ -73,8 +73,8 @@ const INITIAL_TASKS: Task[] = [
 interface State {
   columns: Column[]
   tasks: Task[]
-  changeColumns: (activeColumnId: string, overColumnId: string) => void
-  changeTasks: (active: Active, overId: Over) => void
+  moveColumns: (activeColumnId: string, overColumnId: string) => void
+  moveTask: (active: Active, overId: Over) => void
   activeColumn: Column | null
   activeTask: Task | null
   updateActive: (current: CurrentItem | null) => void
@@ -93,7 +93,7 @@ export const useTaskStore = create<State>()(
         tasks: INITIAL_TASKS,
         activeColumn: null,
         activeTask: null,
-        changeColumns: (activeColumnId, overColumnId) => {
+        moveColumns: (activeColumnId, overColumnId) => {
           const { columns } = get()
           const activeColumnIndex = columns.findIndex(
             (column) => column.id === activeColumnId
@@ -108,7 +108,7 @@ export const useTaskStore = create<State>()(
           )
           set({ columns: newOrderColumns })
         },
-        changeTasks: (active, over) => {
+        moveTask: (active, over) => {
           const { tasks } = get()
 
           const isActiveTask = active.data.current?.type === 'Task'
@@ -135,19 +135,10 @@ export const useTaskStore = create<State>()(
           }
         },
         updateActive: (current) => {
-          if (!current) {
-            set({ activeColumn: null })
-            set({ activeTask: null })
-            return
-          }
-          if (current?.type === 'Column') {
-            set({ activeColumn: current.column })
-            return
-          }
-          if (current?.type === 'Task') {
-            set({ activeTask: current.task })
-            return
-          }
+          set({
+            activeColumn: current?.type === 'Column' ? current.column : null,
+            activeTask: current?.type === 'Task' ? current.task : null
+          })
         },
         createColumn: (columnName: string) => {
           if (!columnName) return
@@ -165,11 +156,7 @@ export const useTaskStore = create<State>()(
         },
         createTask: (task: Task) => {
           const { tasks } = get()
-          if (
-            tasks.find(
-              (t) => t.id.toLocaleLowerCase() === task.id.toLocaleLowerCase()
-            )
-          )
+          if (tasks.some((t) => t.id.toLowerCase() === task.id.toLowerCase()))
             return
           if (!task) return
           const newTask = [...tasks, task]
@@ -184,14 +171,18 @@ export const useTaskStore = create<State>()(
         editTask: (task) => {
           const { tasks } = get()
           const taskIndex = tasks.findIndex((t) => t.id === task.id)
-          tasks[taskIndex] = task
-          set({ tasks })
+          if (taskIndex === -1) return
+          const updatedTasks = [...tasks]
+          updatedTasks[taskIndex] = task
+          set({ tasks: updatedTasks })
         },
         editColumn: (column) => {
           const { columns } = get()
           const columnIndex = columns.findIndex((c) => c.id === column.id)
-          columns[columnIndex] = column
-          set({ columns })
+          if (columnIndex === -1) return
+          const updatedColumns = [...columns]
+          updatedColumns[columnIndex] = column
+          set({ columns: updatedColumns })
         }
       }
     },
