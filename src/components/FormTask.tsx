@@ -4,21 +4,21 @@ import { Plus } from './icons/Plus'
 import { Task } from '../interfaces/task'
 
 interface Props {
-  columnId: string
+  columnName: string
   task?: Task
   dialogRef: React.RefObject<HTMLDialogElement>
   openDialog: () => void
   closeDialog: () => void
 }
 export const FormTask = ({
-  columnId,
+  columnName,
   task,
   dialogRef,
   openDialog,
   closeDialog
 }: Props) => {
   const { formTask, handleChange, handleSubmit } = useFormTask(
-    columnId,
+    columnName,
     closeDialog,
     task
   )

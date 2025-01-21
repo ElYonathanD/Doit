@@ -5,71 +5,10 @@ import { Task } from '../interfaces/task'
 import { arrayMove } from '@dnd-kit/sortable'
 import { Active, Over } from '@dnd-kit/core'
 import { CurrentItem } from '../interfaces/currentItem'
+import { v4 as uuidv4 } from 'uuid'
 
-const INITIAL_COLUMNS: Column[] = [
-  {
-    id: 'coming',
-    name: 'coming'
-  },
-  { id: 'done', name: 'done' },
-  { id: 'archive', name: 'archive' }
-]
-const INITIAL_TASKS: Task[] = [
-  {
-    id: 'hacer1',
-    title: 'hacer 1',
-    desc: 'hacer algo',
-    initialDate: '2021-10-10',
-    endDate: '2021-10-11',
-    status: 'coming',
-    priority: false
-  },
-  {
-    id: 'hacer2',
-    title: 'hacer 2',
-    desc: 'hacer algo 2',
-    initialDate: '2021-10-10',
-    endDate: '2021-10-11',
-    status: 'coming',
-    priority: false
-  },
-  {
-    id: 'fix3',
-    title: 'fix 3',
-    desc: 'revisar 33',
-    initialDate: '2021-10-10',
-    endDate: '2021-10-11',
-    status: 'done',
-    priority: false
-  },
-  {
-    id: 'hacer4',
-    title: 'hacer 4',
-    desc: 'revisar 33 2',
-    initialDate: '2021-10-10 2',
-    endDate: '2021-10-11',
-    status: 'done',
-    priority: false
-  },
-  {
-    id: 'fix5',
-    title: 'fix 5',
-    desc: 'revisar 33',
-    initialDate: '2021-10-10',
-    endDate: '2021-10-11',
-    status: 'archive',
-    priority: true
-  },
-  {
-    id: 'hacer6',
-    title: 'hacer 6',
-    desc: 'revisar 33 2',
-    initialDate: '2021-10-10',
-    endDate: '2021-10-11',
-    status: 'done',
-    priority: true
-  }
-]
+const INITIAL_COLUMNS: Column[] = []
+const INITIAL_TASKS: Task[] = []
 interface State {
   columns: Column[]
   tasks: Task[]
@@ -79,8 +18,8 @@ interface State {
   activeTask: Task | null
   updateActive: (current: CurrentItem | null) => void
   createColumn: (columnName: string) => void
-  deleteColumn: (columnId: string) => void
-  createTask: (task: Task) => void
+  deleteColumn: (column: Column) => void
+  createTask: (task: Omit<Task, 'id'>) => void
   deleteTask: (taskId: string) => void
   editTask: (task: Task) => void
   editColumn: (column: Column) => void
@@ -93,13 +32,13 @@ export const useTaskStore = create<State>()(
         tasks: INITIAL_TASKS,
         activeColumn: null,
         activeTask: null,
-        moveColumns: (activeColumnId, overColumnId) => {
+        moveColumns: (activeColumnId: string, overColumnId: string) => {
           const { columns } = get()
           const activeColumnIndex = columns.findIndex(
-            (column) => column.id === activeColumnId
+            (column) => column.name === activeColumnId
           )
           const overColumnIndex = columns.findIndex(
-            (column) => column.id === overColumnId
+            (column) => column.name === overColumnId
           )
           const newOrderColumns = arrayMove(
             columns,
@@ -108,9 +47,8 @@ export const useTaskStore = create<State>()(
           )
           set({ columns: newOrderColumns })
         },
-        moveTask: (active, over) => {
+        moveTask: (active: Active, over: Over) => {
           const { tasks } = get()
-
           const isActiveTask = active.data.current?.type === 'Task'
           const isOverTask = over.data.current?.type === 'Task'
           const isOverColumn = over.data.current?.type === 'Column'
@@ -134,7 +72,7 @@ export const useTaskStore = create<State>()(
             set({ tasks: newOrderTask })
           }
         },
-        updateActive: (current) => {
+        updateActive: (current: CurrentItem | null) => {
           set({
             activeColumn: current?.type === 'Column' ? current.column : null,
             activeTask: current?.type === 'Task' ? current.task : null
@@ -143,32 +81,31 @@ export const useTaskStore = create<State>()(
         createColumn: (columnName: string) => {
           if (!columnName) return
           const { columns } = get()
-          const newColumns = [...columns, { name: columnName, id: columnName }]
+          const newColumns = [...columns, { name: columnName, id: uuidv4() }]
           set({ columns: newColumns })
         },
-        deleteColumn: (columnId) => {
-          if (!columnId) return
+        deleteColumn: (column: Column) => {
+          if (!column) return
           const { columns, tasks } = get()
-          const newColumns = columns.filter((column) => column.id !== columnId)
-          const newTask = tasks.filter((task) => task.status !== columnId)
-          set({ columns: newColumns })
-          set({ tasks: newTask })
+          const newColumns = columns.filter((c) => c.id !== column.id)
+          const newTask = tasks.filter((task) => task.status !== column.name)
+          set({ columns: newColumns, tasks: newTask })
         },
-        createTask: (task: Task) => {
+        createTask: (task: Omit<Task, 'id'>) => {
           const { tasks } = get()
-          if (tasks.some((t) => t.id.toLowerCase() === task.id.toLowerCase()))
-            return
-          if (!task) return
-          const newTask = [...tasks, task]
-          set({ tasks: newTask })
+          const newTask = {
+            ...task,
+            id: uuidv4()
+          }
+          set({ tasks: [...tasks, newTask] })
         },
-        deleteTask: (taskId) => {
+        deleteTask: (taskId: string) => {
           if (!taskId) return
           const { tasks } = get()
           const newTask = tasks.filter((task) => task.id !== taskId)
           set({ tasks: newTask })
         },
-        editTask: (task) => {
+        editTask: (task: Task) => {
           const { tasks } = get()
           const taskIndex = tasks.findIndex((t) => t.id === task.id)
           if (taskIndex === -1) return
@@ -176,13 +113,21 @@ export const useTaskStore = create<State>()(
           updatedTasks[taskIndex] = task
           set({ tasks: updatedTasks })
         },
-        editColumn: (column) => {
-          const { columns } = get()
+        editColumn: (column: Column) => {
+          const { columns, tasks } = get()
           const columnIndex = columns.findIndex((c) => c.id === column.id)
           if (columnIndex === -1) return
+
           const updatedColumns = [...columns]
+          const updatedTasks = tasks.map((task) => {
+            if (task.status === columns[columnIndex].name) {
+              return { ...task, status: column.name }
+            }
+            return task
+          })
+
           updatedColumns[columnIndex] = column
-          set({ columns: updatedColumns })
+          set({ columns: updatedColumns, tasks: updatedTasks })
         }
       }
     },

@@ -3,7 +3,7 @@ import { useTaskStore } from '../store/tasks'
 import { Task } from '../interfaces/task'
 
 export const useFormTask = (
-  columnId: string,
+  columnName: string,
   closeDialog: () => void,
   task?: Task
 ) => {
@@ -40,7 +40,7 @@ export const useFormTask = (
       formTask.endDate
     ) {
       if (!task) {
-        createTask({ ...formTask, id: formTask.title, status: columnId })
+        createTask({ ...formTask, status: columnName })
         setFormTask({
           id: '',
           title: '',

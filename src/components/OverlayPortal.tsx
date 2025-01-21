@@ -13,7 +13,7 @@ export const OverlayPortal = () => {
           {activeColumn && (
             <TasksList
               column={activeColumn}
-              tasks={tasks.filter((task) => task.status === activeColumn.id)}
+              tasks={tasks.filter((task) => task.status === activeColumn.name)}
             />
           )}
           {activeTask && <TaskCard task={activeTask} />}

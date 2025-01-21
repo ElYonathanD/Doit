@@ -8,7 +8,7 @@ import { FormColumn } from './FormColumn'
 
 export const TaskDashboard = () => {
   const {
-    columnsIds,
+    columnsNames,
     columns,
     tasks,
     handleDragEnd,
@@ -28,12 +28,12 @@ export const TaskDashboard = () => {
           onDragEnd={handleDragEnd}
           onDragOver={handleDragOver}
         >
-          <SortableContext items={columnsIds}>
+          <SortableContext items={columnsNames}>
             {columns.map((column) => (
               <TasksList
                 key={column.id}
                 column={column}
-                tasks={tasks.filter((task) => task.status === column.id)}
+                tasks={tasks.filter((task) => task.status === column.name)}
               />
             ))}
           </SortableContext>

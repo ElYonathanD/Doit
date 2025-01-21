@@ -8,8 +8,8 @@ export const UseDragAndDrop = () => {
     (state) => state
   )
 
-  const columnsIds = useMemo(
-    () => columns.map((column) => column.id),
+  const columnsNames = useMemo(
+    () => columns.map((column) => column.name),
     [columns]
   )
 
@@ -19,7 +19,6 @@ export const UseDragAndDrop = () => {
     if (!over) return
     const activeColumnId = active.id as string
     const overColumnId = over.id as string
-
     if (activeColumnId === overColumnId) return
     const isOverColumn = active.data.current?.type === 'Column'
     if (isOverColumn) moveColumns(activeColumnId, overColumnId)
@@ -38,7 +37,7 @@ export const UseDragAndDrop = () => {
   return {
     tasks,
     columns,
-    columnsIds,
+    columnsNames,
     handleDragEnd,
     handleDragStart,
     handleDragOver

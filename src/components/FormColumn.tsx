@@ -25,15 +25,11 @@ export const FormColumn = ({
     e.preventDefault()
     const columnName = inputRef.current?.value.trim()
     if (columnName) {
+      if (columns.some((c) => c.id.toLowerCase() === columnName.toLowerCase()))
+        return
       if (!column) {
-        if (
-          columns.some((c) => c.id.toLowerCase() === columnName.toLowerCase())
-        )
-          return
         createColumn(columnName)
-        if (inputRef.current) {
-          inputRef.current.value = ''
-        }
+        if (inputRef.current) inputRef.current.value = ''
       } else {
         editColumn({ name: columnName, id: column.id })
       }

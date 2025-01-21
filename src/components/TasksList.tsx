@@ -33,7 +33,7 @@ export const TasksList = ({ column, tasks }: Props) => {
     transform,
     transition,
     isDragging
-  } = useSortable({ id: column.id, data: { type: 'Column', column } })
+  } = useSortable({ id: column.name, data: { type: 'Column', column } })
 
   const tasksIds = useMemo(() => tasks.map((task) => task.id), [tasks])
   const style = {
@@ -53,7 +53,7 @@ export const TasksList = ({ column, tasks }: Props) => {
     >
       <div className='relative p-4 border-2 border-slate-950 dark:border-slate-100 rounded-lg'>
         <div className='absolute right-1 top-1 z-10 flex gap-2 items-center'>
-          <button onClick={() => deleteColumn(column.id)}>
+          <button onClick={() => deleteColumn(column)}>
             <Delete />
           </button>
           <button onClick={() => openDialogColumn()}>
@@ -81,7 +81,7 @@ export const TasksList = ({ column, tasks }: Props) => {
           ))}
         </SortableContext>
         <FormTask
-          columnId={column.id}
+          columnName={column.name}
           dialogRef={dialogRef}
           openDialog={openDialog}
           closeDialog={closeDialog}
