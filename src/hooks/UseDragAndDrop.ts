@@ -1,10 +1,11 @@
-import { useMemo } from 'react'
+import { useMemo, useRef } from 'react'
 import { useTaskStore } from '../store/tasks'
 import { DragEndEvent, DragOverEvent, DragStartEvent } from '@dnd-kit/core'
 import { CurrentItem } from '../interfaces/currentItem'
 import { useColumnStore } from '../store/columns'
 
 export const UseDragAndDrop = () => {
+  const throttleTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
   const { tasks, moveTask, updateActiveTask } = useTaskStore((state) => state)
   const { columns, moveColumns, updateActiveColumn } = useColumnStore(
     (state) => state
@@ -18,6 +19,10 @@ export const UseDragAndDrop = () => {
   const handleDragEnd = (event: DragEndEvent) => {
     updateActiveTask(null)
     updateActiveColumn(null)
+    if (throttleTimeout.current) {
+      clearTimeout(throttleTimeout.current)
+      throttleTimeout.current = null
+    }
     const { active, over } = event
     if (!over) return
     const activeColumnId = active.id as string
@@ -33,7 +38,13 @@ export const UseDragAndDrop = () => {
   }
 
   const handleDragOver = (event: DragOverEvent) => {
+    if (throttleTimeout.current) return //evitar multiples llamados, evite sobrecarga
+
+    throttleTimeout.current = setTimeout(() => {
+      throttleTimeout.current = null
+    }, 80)
     const { active, over } = event
+
     if (!over) return
     if (active.id === over.id) return
     moveTask(active, over)
