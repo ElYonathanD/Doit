@@ -41,7 +41,7 @@ export const TaskCard = ({ task }: Props) => {
           : ''
       }`}
     >
-      <div className='absolute right-1 top-1 z-10 flex gap-2 items-center'>
+      <div className='absolute right-1 top-1  flex gap-2 items-center'>
         <button onClick={() => deleteTask(task.id)} className=''>
           <Delete />
         </button>
