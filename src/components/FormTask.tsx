@@ -32,7 +32,7 @@ export const FormTask = ({
             openDialog()
             inputTitleRef.current?.focus()
           }}
-          className='p-4 bg-slate-500 rounded-lg dark:bg-slate-800 '
+          className='p-3 bg-slate-400 rounded-lg w-full dark:bg-slate-800 absolute bottom-2'
           aria-label='Abrir diálogo de creación'
         >
           <Plus />

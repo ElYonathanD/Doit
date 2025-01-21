@@ -3,9 +3,9 @@ import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { Delete } from './icons/Delete'
 import { useTaskStore } from '../store/tasks'
-import { Eye } from './icons/Eye'
 import { useRef } from 'react'
 import { FormTask } from './FormTask'
+import { Pen } from './icons/Pen'
 
 interface Props {
   task: Task
@@ -46,7 +46,7 @@ export const TaskCard = ({ task }: Props) => {
           <Delete />
         </button>
         <button onClick={() => openDialog()} className=''>
-          <Eye />
+          <Pen />
         </button>
       </div>
 

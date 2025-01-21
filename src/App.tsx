@@ -4,10 +4,10 @@ import { TaskDashboard } from './components/TaskDashboard'
 
 function App() {
   return (
-    <>
+    <div className='h-screen flex flex-col'>
       <Header />
       <TaskDashboard />
-    </>
+    </div>
   )
 }
 

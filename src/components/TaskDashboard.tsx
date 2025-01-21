@@ -21,8 +21,8 @@ export const TaskDashboard = () => {
   const closeDialog = () => dialogRefColum.current?.close()
 
   return (
-    <main className='w-full bg-slate-300 dark:bg-gray-600'>
-      <div className='flex gap-8 p-6 h-screen overflow-auto'>
+    <main className='w-full flex-grow bg-slate-300 dark:bg-gray-600 overflow-hidden'>
+      <div className='flex gap-8 p-6 overflow-auto h-full'>
         <DndContext
           onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}

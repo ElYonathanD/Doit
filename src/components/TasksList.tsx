@@ -48,7 +48,7 @@ export const TasksList = ({ column, tasks }: Props) => {
     <div
       ref={setNodeRef}
       style={style}
-      className={`flex-shrink-0 p-4 min-h-full  bg-slate-200 dark:bg-gray-700 dark:text-white rounded-lg w-36 sm:w-40 md:w-48 lg:w-56 ${
+      className={`flex flex-col flex-shrink-0 p-4 min-h-full relative bg-slate-200 dark:bg-gray-700 dark:text-white rounded-lg w-36 sm:w-40 md:w-48 lg:w-56 ${
         isDragging
           ? 'opacity-50 border-2 border-black dark:border-slate-200'
           : ''
@@ -112,7 +112,7 @@ export const TasksList = ({ column, tasks }: Props) => {
           {column.name}
         </h2>
       </div>
-      <ul className='flex flex-col items-center'>
+      <ul className='flex flex-col items-center h-full overflow-y-auto pb-14'>
         <SortableContext items={tasksIds}>
           {tasks.map((task) => (
             <TaskCard key={task.id} task={task} />
