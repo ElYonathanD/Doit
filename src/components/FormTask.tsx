@@ -2,6 +2,7 @@ import { useFormTask } from '../hooks/useFormTask'
 import { Close } from './icons/Close'
 import { Plus } from './icons/Plus'
 import { Task } from '../interfaces/task'
+import { useRef } from 'react'
 
 interface Props {
   columnName: string
@@ -22,11 +23,15 @@ export const FormTask = ({
     closeDialog,
     task
   )
+  const inputTitleRef = useRef<HTMLInputElement>(null)
   return (
     <>
       {!task && (
         <button
-          onClick={openDialog}
+          onClick={() => {
+            openDialog()
+            inputTitleRef.current?.focus()
+          }}
           className='p-4 bg-slate-500 rounded-lg dark:bg-slate-800 '
           aria-label='Abrir diálogo de creación'
         >
@@ -64,6 +69,7 @@ export const FormTask = ({
               type='text'
               id='title'
               name='title'
+              ref={inputTitleRef}
               value={formTask.title}
               onChange={handleChange}
               className='mt-1 p-2 w-full rounded-lg bg-gray-100 border border-gray-300 dark:bg-gray-700 dark:border-gray-600'

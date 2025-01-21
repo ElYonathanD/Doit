@@ -41,7 +41,10 @@ export const FormColumn = ({
     <>
       {!column && (
         <button
-          onClick={openDialog}
+          onClick={() => {
+            openDialog()
+            inputRef.current?.focus()
+          }}
           className='p-4 bg-slate-500 rounded-lg dark:bg-slate-800'
           aria-label='Abrir diálogo de creación'
         >
