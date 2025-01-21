@@ -5,17 +5,19 @@ import { CSS } from '@dnd-kit/utilities'
 import { SortableContext, useSortable } from '@dnd-kit/sortable'
 import { useMemo, useRef } from 'react'
 import { Delete } from './icons/Delete'
-import { useTaskStore } from '../store/tasks'
 import { FormTask } from './FormTask'
 import { Pen } from './icons/Pen'
 import { FormColumn } from './FormColumn'
+import { useColumnStore } from '../store/columns'
+import { useTaskStore } from '../store/tasks'
 interface Props {
   tasks: Task[]
   column: Column
 }
 
 export const TasksList = ({ column, tasks }: Props) => {
-  const { deleteColumn } = useTaskStore((state) => state)
+  const { deleteColumn } = useColumnStore((state) => state)
+  const { deleteTasksByColumn } = useTaskStore((state) => state)
   const dialogRef = useRef<HTMLDialogElement>(null)
 
   const openDialog = () => dialogRef.current?.showModal()
@@ -53,7 +55,12 @@ export const TasksList = ({ column, tasks }: Props) => {
     >
       <div className='relative p-4 border-2 border-slate-950 dark:border-slate-100 rounded-lg'>
         <div className='absolute right-1 top-1 z-10 flex gap-2 items-center'>
-          <button onClick={() => deleteColumn(column)}>
+          <button
+            onClick={() => {
+              deleteColumn(column)
+              deleteTasksByColumn(column.name)
+            }}
+          >
             <Delete />
           </button>
           <button onClick={() => openDialogColumn()}>

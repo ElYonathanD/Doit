@@ -2,9 +2,11 @@ import { useMemo } from 'react'
 import { useTaskStore } from '../store/tasks'
 import { DragEndEvent, DragOverEvent, DragStartEvent } from '@dnd-kit/core'
 import { CurrentItem } from '../interfaces/currentItem'
+import { useColumnStore } from '../store/columns'
 
 export const UseDragAndDrop = () => {
-  const { columns, tasks, moveColumns, moveTask, updateActive } = useTaskStore(
+  const { tasks, moveTask, updateActiveTask } = useTaskStore((state) => state)
+  const { columns, moveColumns, updateActiveColumn } = useColumnStore(
     (state) => state
   )
 
@@ -14,7 +16,8 @@ export const UseDragAndDrop = () => {
   )
 
   const handleDragEnd = (event: DragEndEvent) => {
-    updateActive(null)
+    updateActiveTask(null)
+    updateActiveColumn(null)
     const { active, over } = event
     if (!over) return
     const activeColumnId = active.id as string
@@ -25,7 +28,8 @@ export const UseDragAndDrop = () => {
   }
 
   const handleDragStart = (event: DragStartEvent) => {
-    updateActive(event.active.data.current as CurrentItem)
+    updateActiveTask(event.active.data.current as CurrentItem)
+    updateActiveColumn(event.active.data.current as CurrentItem)
   }
 
   const handleDragOver = (event: DragOverEvent) => {

@@ -3,9 +3,11 @@ import { TaskCard } from './TaskCard'
 import { useTaskStore } from '../store/tasks'
 import { createPortal } from 'react-dom'
 import { TasksList } from './TasksList'
+import { useColumnStore } from '../store/columns'
 
 export const OverlayPortal = () => {
-  const { tasks, activeColumn, activeTask } = useTaskStore((state) => state)
+  const { tasks, activeTask } = useTaskStore((state) => state)
+  const { activeColumn } = useColumnStore((state) => state)
   return (
     <>
       {createPortal(

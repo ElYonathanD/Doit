@@ -51,7 +51,7 @@ export const TaskCard = ({ task }: Props) => {
       </div>
 
       <FormTask
-        columnId={task.status}
+        columnName={task.status}
         task={task}
         dialogRef={dialogRef}
         openDialog={openDialog}

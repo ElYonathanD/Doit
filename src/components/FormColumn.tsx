@@ -1,8 +1,9 @@
 import { FormEvent, useRef } from 'react'
-import { useTaskStore } from '../store/tasks'
 import { Close } from './icons/Close'
 import { Plus } from './icons/Plus'
 import { Column } from '../interfaces/column'
+import { useColumnStore } from '../store/columns'
+import { useTaskStore } from '../store/tasks'
 
 interface Props {
   column?: Column
@@ -17,8 +18,8 @@ export const FormColumn = ({
   openDialog,
   closeDialog
 }: Props) => {
-  const { columns, createColumn, editColumn } = useTaskStore((state) => state)
-
+  const { columns, createColumn, editColumn } = useColumnStore((state) => state)
+  const { editTaskByColumn } = useTaskStore((state) => state)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -31,7 +32,9 @@ export const FormColumn = ({
         createColumn(columnName)
         if (inputRef.current) inputRef.current.value = ''
       } else {
+        const columnIndex = columns.findIndex((c) => c.id === column.id)
         editColumn({ name: columnName, id: column.id })
+        editTaskByColumn(columnName, columns[columnIndex].name)
       }
       closeDialog()
     }
