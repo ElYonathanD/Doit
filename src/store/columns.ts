@@ -5,7 +5,12 @@ import { arrayMove } from '@dnd-kit/sortable'
 import { CurrentItem } from '../interfaces/currentItem'
 import { v4 as uuidv4 } from 'uuid'
 
-const INITIAL_COLUMNS: Column[] = []
+const INITIAL_COLUMNS: Column[] = [
+  {
+    id: uuidv4(),
+    name: 'Pending'
+  }
+]
 interface State {
   columns: Column[]
   moveColumns: (activeColumnId: string, overColumnId: string) => void
