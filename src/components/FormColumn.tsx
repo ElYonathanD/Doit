@@ -48,7 +48,7 @@ export const FormColumn = ({
             openDialog()
             inputRef.current?.focus()
           }}
-          className='p-4 bg-slate-500 rounded-lg dark:bg-slate-800'
+          className='p-4 bg-slate-200 dark:bg-gray-700 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg w-36 sm:w-40 md:w-48 lg:w-56'
           aria-label='Abrir diálogo de creación'
         >
           <Plus />
@@ -56,7 +56,7 @@ export const FormColumn = ({
       )}
       <dialog
         ref={dialogRefColum}
-        className='rounded-lg p-8 relative min-w-72 dark:bg-slate-700'
+        className='rounded-lg p-8 relative min-w-72 dark:bg-gray-800 shadow-2xl'
         aria-labelledby='dialog-title'
       >
         <button
@@ -66,7 +66,10 @@ export const FormColumn = ({
         >
           <Close />
         </button>
-        <form onSubmit={handleSubmit} className='flex flex-col gap-2 pt-4 pb-4'>
+        <form
+          onSubmit={handleSubmit}
+          className='flex flex-col gap-6 p-4 rounded-lg bg-white dark:bg-gray-800 dark:text-white'
+        >
           <p className='font-semibold text-lg dark:text-white'>
             {column ? 'Editar' : 'Crear'} Columna
           </p>
@@ -75,13 +78,13 @@ export const FormColumn = ({
             id='name'
             ref={inputRef}
             defaultValue={column?.name}
-            className='p-2 rounded-lg bg-slate-200 border-2 border-slate-600'
+            className='mt-1 p-2 w-full rounded-lg bg-gray-100 border border-gray-300 dark:bg-gray-700 dark:border-gray-600'
             placeholder='Ingrese nombre de columna'
             required
           />
           <button
             type='submit'
-            className='p-2 bg-slate-600 rounded-lg text-white dark:bg-slate-800'
+            className='p-3 w-full bg-slate-600 text-white font-semibold rounded-lg hover:bg-slate-500 dark:bg-slate-700 dark:hover:bg-slate-900'
           >
             {column ? 'Editar' : 'Crear'}
           </button>

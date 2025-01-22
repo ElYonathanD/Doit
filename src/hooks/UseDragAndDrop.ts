@@ -39,10 +39,9 @@ export const UseDragAndDrop = () => {
 
   const handleDragOver = (event: DragOverEvent) => {
     if (throttleTimeout.current) return //evitar multiples llamados, evite sobrecarga
-
     throttleTimeout.current = setTimeout(() => {
       throttleTimeout.current = null
-    }, 80)
+    }, 30)
     const { active, over } = event
 
     if (!over) return

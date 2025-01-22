@@ -37,7 +37,6 @@ export const TasksList = ({ column, tasks }: Props) => {
     transition,
     isDragging
   } = useSortable({ id: column.name, data: { type: 'Column', column } })
-
   const tasksIds = useMemo(() => tasks.map((task) => task.id), [tasks])
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -48,83 +47,87 @@ export const TasksList = ({ column, tasks }: Props) => {
     <div
       ref={setNodeRef}
       style={style}
-      className={`flex flex-col flex-shrink-0 p-4 min-h-full relative bg-slate-200 dark:bg-gray-700 dark:text-white rounded-lg w-36 sm:w-40 md:w-48 lg:w-56 ${
+      className={`flex flex-col flex-shrink-0 p-4 pr-0 min-h-full relative bg-slate-200 dark:bg-gray-700 dark:text-white rounded-lg w-56 ${
         isDragging
           ? 'opacity-50 border-2 border-black dark:border-slate-200'
           : ''
       }`}
     >
-      <div className='relative p-4 border-2 border-slate-950 dark:border-slate-100 rounded-lg'>
-        <div className='absolute right-1 top-1 z-10'>
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className='flex items-center justify-center p-1 bg-gray-200 rounded-full hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600'
-          >
-            <Options />
-          </button>
-
-          {menuOpen && (
-            <div
-              className='absolute w-40 bg-white z-10 rounded-md shadow-lg dark:bg-gray-800'
-              onMouseLeave={() => setMenuOpen(false)}
+      <div className='pr-4'>
+        <div className='relative p-4 border-2 border-slate-950 dark:border-slate-400 rounded-lg bg-white dark:bg-gray-900 shadow-slate-500'>
+          <div className='absolute right-1 top-1 z-10'>
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className='flex items-center justify-center p-1 rounded-full hover:bg-gray-300 bg-white dark:bg-gray-900 dark:hover:bg-gray-600'
             >
-              <ul className='py-1'>
-                <li>
-                  <button
-                    onClick={() => {
-                      deleteColumn(column)
-                      deleteTasksByColumn(column.name)
-                      setMenuOpen(false)
-                    }}
-                    className='flex items-center justify-start gap-4 w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700'
-                  >
-                    <Delete />
-                    Eliminar
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => {
-                      openDialogColumn()
-                      setMenuOpen(false)
-                    }}
-                    className='flex items-center justify-start gap-4 w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700'
-                  >
-                    <Pen />
-                    Editar
-                  </button>
-                </li>
-              </ul>
-            </div>
-          )}
+              <Options />
+            </button>
+
+            {menuOpen && (
+              <div
+                className='absolute w-40 bg-white z-10 rounded-md shadow-lg dark:bg-gray-800'
+                onMouseLeave={() => setMenuOpen(false)}
+              >
+                <ul className='py-1'>
+                  <li>
+                    <button
+                      onClick={() => {
+                        deleteColumn(column)
+                        deleteTasksByColumn(column.name)
+                        setMenuOpen(false)
+                      }}
+                      className='flex items-center justify-start gap-4 w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700'
+                    >
+                      <Delete />
+                      Eliminar
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => {
+                        openDialogColumn()
+                        setMenuOpen(false)
+                      }}
+                      className='flex items-center justify-start gap-4 w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700'
+                    >
+                      <Pen />
+                      Editar
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            )}
+          </div>
+          <FormColumn
+            dialogRefColum={dialogRefColumn}
+            openDialog={openDialogColumn}
+            column={column}
+            closeDialog={closeDialogColumn}
+          />
+          <h2
+            {...attributes}
+            {...listeners}
+            className='text-center font-bold overflow-auto sm:text-lg'
+          >
+            {column.name}
+          </h2>
         </div>
-        <FormColumn
-          dialogRefColum={dialogRefColumn}
-          openDialog={openDialogColumn}
-          column={column}
-          closeDialog={closeDialogColumn}
-        />
-        <h2
-          {...attributes}
-          {...listeners}
-          className='text-center font-bold overflow-auto sm:text-lg'
-        >
-          {column.name}
-        </h2>
       </div>
-      <ul className='flex flex-col items-center h-full overflow-y-auto pb-14'>
-        <SortableContext items={tasksIds}>
-          {tasks.map((task) => (
-            <TaskCard key={task.id} task={task} />
-          ))}
-        </SortableContext>
-        <FormTask
-          columnName={column.name}
-          dialogRef={dialogRef}
-          openDialog={openDialog}
-          closeDialog={closeDialog}
-        />
-      </ul>
+      <div className='h-full overflow-y-auto custom-scroll'>
+        <ul className='flex flex-col items-center pr-[13px] pb-14'>
+          <SortableContext items={tasksIds}>
+            {tasks.map((task) => (
+              <TaskCard key={task.id} task={task} />
+            ))}
+          </SortableContext>
+          <FormTask
+            columnName={column.name}
+            dialogRef={dialogRef}
+            openDialog={openDialog}
+            closeDialog={closeDialog}
+          />
+        </ul>
+      </div>
     </div>
   )
 }

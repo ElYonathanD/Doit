@@ -32,7 +32,7 @@ export const FormTask = ({
             openDialog()
             inputTitleRef.current?.focus()
           }}
-          className='p-3 bg-slate-400 rounded-lg w-full dark:bg-slate-800 absolute bottom-2'
+          className='p-3 bg-slate-400 rounded-lg w-[191px] hover:bg-slate-500 dark:bg-slate-900 dark:hover:bg-gray-500 absolute bottom-3'
           aria-label='Abrir diálogo de creación'
         >
           <Plus />
@@ -40,7 +40,7 @@ export const FormTask = ({
       )}
       <dialog
         ref={dialogRef}
-        className='rounded-lg p-8 relative min-w-72 dark:bg-slate-700'
+        className='rounded-lg p-8 relative min-w-72 shadow-2xl dark:bg-gray-800'
         aria-labelledby='dialog-title'
       >
         <button
@@ -52,7 +52,7 @@ export const FormTask = ({
         </button>
         <form
           onSubmit={handleSubmit}
-          className='flex flex-col gap-6 p-4 rounded-lg shadow-lg bg-white dark:bg-gray-800'
+          className='flex flex-col gap-6 p-4 rounded-lg bg-white dark:bg-gray-800 dark:text-white'
         >
           <p className='font-semibold text-xl text-center text-gray-800 dark:text-white'>
             {task ? 'Editar' : 'Crear'} Tarea
