@@ -25,6 +25,10 @@ export const TaskCard = ({ task }: Props) => {
     transform: CSS.Transform.toString(transform),
     transition
   }
+  const today = new Date()
+  const taskDate = new Date(task.endDate)
+
+  const isPastOrToday = taskDate <= today
   return (
     <li
       ref={setNodeRef}
@@ -45,7 +49,15 @@ export const TaskCard = ({ task }: Props) => {
         <h3 className='font-bold text-left line-clamp-2 w-11/12'>
           {task.title}
         </h3>
-        <p>{task.endDate}</p>
+        <p
+          style={{
+            background: isPastOrToday ? 'red' : 'green',
+            borderColor: isPastOrToday ? '#ffabab' : '#31c80c'
+          }}
+          className='w-fit rounded-xl px-2 text-white border-[1px]'
+        >
+          {task.endDate}
+        </p>
         {task.priority && <PriorityIndicator />}
       </div>
       <TaskDialog columnName={task.status} task={task} dialogRef={dialogRef} />
