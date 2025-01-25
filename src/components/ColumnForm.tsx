@@ -35,7 +35,7 @@ export const ColumnForm = ({ inputRef, column, closeDialog }: Props) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className='flex flex-col gap-6 rounded-lg bg-white dark:bg-gray-800 dark:text-white'
+      className='flex flex-col gap-6 rounded-lg dark:bg-gray-800 dark:text-white'
     >
       <p className='font-semibold text-lg dark:text-white'>
         {column ? 'Editar' : 'Crear'} Columna
@@ -51,7 +51,7 @@ export const ColumnForm = ({ inputRef, column, closeDialog }: Props) => {
       />
       <button
         type='submit'
-        className='p-3 w-full bg-slate-600 text-white font-semibold rounded-lg hover:bg-slate-500 dark:bg-slate-700 dark:hover:bg-slate-900'
+        className='p-3 w-full bg-slate-600 text-white font-semibold rounded-lg hover:bg-slate-500 border-2 border-white border-opacity-30 dark:bg-slate-900 dark:hover:bg-gray-600'
       >
         {column ? 'Editar' : 'Crear'}
       </button>

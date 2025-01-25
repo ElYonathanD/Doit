@@ -23,7 +23,7 @@ export const TaskDialog = ({ columnName, task, dialogRef }: Props) => {
             openDialog()
             inputTitleRef.current?.focus()
           }}
-          className='p-3 bg-slate-400 rounded-lg w-[191px] hover:bg-slate-500 dark:bg-slate-900 dark:hover:bg-gray-500 absolute bottom-3'
+          className='p-3 bg-slate-400 rounded-lg w-[191px] hover:bg-slate-500 dark:bg-slate-900 dark:hover:bg-gray-600 absolute bottom-3'
           aria-label='Abrir diálogo de creación'
         >
           <Plus />
@@ -31,7 +31,7 @@ export const TaskDialog = ({ columnName, task, dialogRef }: Props) => {
       )}
       <dialog
         ref={dialogRef}
-        className='rounded-lg p-8 relative min-w-72 shadow-2xl dark:bg-gray-800'
+        className='rounded-lg p-8 relative min-w-72 shadow-2xl border-2 border-white border-opacity-20 dark:bg-gray-800'
         aria-labelledby='dialog-title'
       >
         <button

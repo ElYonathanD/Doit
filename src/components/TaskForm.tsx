@@ -124,7 +124,7 @@ export const TaskForm = ({
 
       <button
         type='submit'
-        className='p-3 w-full bg-slate-600 text-white font-semibold rounded-lg hover:bg-slate-500 dark:bg-slate-700 dark:hover:bg-slate-900'
+        className='p-3 w-full bg-slate-600 text-white font-semibold rounded-lg border-2 border-white border-opacity-30 hover:bg-slate-500 dark:bg-slate-900 dark:hover:bg-gray-600'
       >
         {task ? 'Editar' : 'Crear'}
       </button>

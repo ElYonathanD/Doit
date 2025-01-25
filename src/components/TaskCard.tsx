@@ -42,7 +42,9 @@ export const TaskCard = ({ task }: Props) => {
         {...attributes}
         {...listeners}
       >
-        <h3 className='font-bold text-left line-clamp-2'>{task.title}</h3>
+        <h3 className='font-bold text-left line-clamp-2 w-11/12'>
+          {task.title}
+        </h3>
         <p>{task.endDate}</p>
         {task.priority && <PriorityIndicator />}
       </div>
