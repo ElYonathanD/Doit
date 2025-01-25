@@ -4,8 +4,8 @@ import { TaskCard } from './TaskCard'
 import { CSS } from '@dnd-kit/utilities'
 import { SortableContext, useSortable } from '@dnd-kit/sortable'
 import { useMemo, useRef } from 'react'
-import { FormTask } from './FormTask'
-import { FormColumn } from './FormColumn'
+import { TaskDialog } from './TaskDialog'
+import { ColumnDialog } from './ColumnDialog'
 import { Menu } from './Menu'
 interface Props {
   tasks: Task[]
@@ -14,12 +14,7 @@ interface Props {
 
 export const TasksList = ({ column, tasks }: Props) => {
   const dialogRef = useRef<HTMLDialogElement>(null)
-  const openDialog = () => dialogRef.current?.showModal()
-  const closeDialog = () => dialogRef.current?.close()
-
   const dialogRefColumn = useRef<HTMLDialogElement>(null)
-  const openDialogColumn = () => dialogRefColumn.current?.showModal()
-  const closeDialogColumn = () => dialogRefColumn.current?.close()
 
   const {
     setNodeRef,
@@ -29,6 +24,7 @@ export const TasksList = ({ column, tasks }: Props) => {
     transition,
     isDragging
   } = useSortable({ id: column.name, data: { type: 'Column', column } })
+
   const tasksIds = useMemo(() => tasks.map((task) => task.id), [tasks])
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -47,13 +43,8 @@ export const TasksList = ({ column, tasks }: Props) => {
     >
       <div className='pr-4'>
         <div className='relative p-4 border-2 border-slate-950 dark:border-slate-400 rounded-lg bg-white dark:bg-gray-900 shadow-slate-500'>
-          <Menu column={column} openDialogColumn={openDialogColumn} />
-          <FormColumn
-            dialogRefColum={dialogRefColumn}
-            openDialog={openDialogColumn}
-            column={column}
-            closeDialog={closeDialogColumn}
-          />
+          <Menu column={column} dialogRefColumn={dialogRefColumn} />
+          <ColumnDialog dialogRefColum={dialogRefColumn} column={column} />
           <h2
             {...attributes}
             {...listeners}
@@ -70,12 +61,7 @@ export const TasksList = ({ column, tasks }: Props) => {
               <TaskCard key={task.id} task={task} />
             ))}
           </SortableContext>
-          <FormTask
-            columnName={column.name}
-            dialogRef={dialogRef}
-            openDialog={openDialog}
-            closeDialog={closeDialog}
-          />
+          <TaskDialog columnName={column.name} dialogRef={dialogRef} />
         </ul>
       </div>
     </div>

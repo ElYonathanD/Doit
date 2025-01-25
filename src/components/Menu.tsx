@@ -8,12 +8,14 @@ import { Pen } from './icons/Pen'
 
 interface Props {
   column: Column
-  openDialogColumn: () => void
+  dialogRefColumn: React.RefObject<HTMLDialogElement>
 }
-export const Menu = ({ column, openDialogColumn }: Props) => {
+export const Menu = ({ column, dialogRefColumn }: Props) => {
   const [menuOpen, setMenuOpen] = useState(false)
   const { deleteColumn } = useColumnStore((state) => state)
   const { deleteTasksByColumn } = useTaskStore((state) => state)
+
+  const openDialog = () => dialogRefColumn.current?.showModal()
 
   return (
     <div className='absolute right-1 top-1 z-10'>
@@ -46,7 +48,7 @@ export const Menu = ({ column, openDialogColumn }: Props) => {
             <li>
               <button
                 onClick={() => {
-                  openDialogColumn()
+                  openDialog()
                   setMenuOpen(false)
                 }}
                 className='flex items-center justify-start gap-4 w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700'

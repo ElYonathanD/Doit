@@ -4,7 +4,7 @@ import { SortableContext } from '@dnd-kit/sortable'
 import { OverlayPortal } from './OverlayPortal'
 import { UseDragAndDrop } from '../hooks/UseDragAndDrop'
 import { useRef } from 'react'
-import { FormColumn } from './FormColumn'
+import { ColumnDialog } from './ColumnDialog'
 
 export const TaskDashboard = () => {
   const {
@@ -17,8 +17,6 @@ export const TaskDashboard = () => {
   } = UseDragAndDrop()
 
   const dialogRefColum = useRef<HTMLDialogElement>(null)
-  const openDialog = () => dialogRefColum.current?.showModal()
-  const closeDialog = () => dialogRefColum.current?.close()
 
   return (
     <main className='w-full flex-grow bg-slate-300 dark:bg-gray-600 overflow-hidden'>
@@ -37,11 +35,7 @@ export const TaskDashboard = () => {
               />
             ))}
           </SortableContext>
-          <FormColumn
-            dialogRefColum={dialogRefColum}
-            openDialog={openDialog}
-            closeDialog={closeDialog}
-          />
+          <ColumnDialog dialogRefColum={dialogRefColum} />
           <OverlayPortal />
         </DndContext>
       </div>

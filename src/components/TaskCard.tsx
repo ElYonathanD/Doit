@@ -1,21 +1,16 @@
 import { Task } from '../interfaces/task'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { Delete } from './icons/Delete'
-import { useTaskStore } from '../store/tasks'
 import { useRef } from 'react'
-import { FormTask } from './FormTask'
-import { Pen } from './icons/Pen'
-import { Flag } from './icons/Flag'
+import { TaskDialog } from './TaskDialog'
+import { TaskActions } from './TaskActions'
+import { PriorityIndicator } from './PriorityIndicator '
 
 interface Props {
   task: Task
 }
 export const TaskCard = ({ task }: Props) => {
-  const { deleteTask } = useTaskStore((state) => state)
   const dialogRef = useRef<HTMLDialogElement>(null)
-  const openDialog = () => dialogRef.current?.showModal()
-  const closeDialog = () => dialogRef.current?.close()
 
   const {
     setNodeRef,
@@ -41,20 +36,7 @@ export const TaskCard = ({ task }: Props) => {
           : ''
       }`}
     >
-      <div className='absolute right-1 bottom-3 flex gap-2 items-center'>
-        <button
-          onClick={() => deleteTask(task.id)}
-          className='hover:bg-gray-200 rounded-md dark:hover:bg-gray-600'
-        >
-          <Delete />
-        </button>
-        <button
-          onClick={() => openDialog()}
-          className='hover:bg-gray-200 rounded-md dark:hover:bg-gray-600'
-        >
-          <Pen />
-        </button>
-      </div>
+      <TaskActions taskId={task.id} dialogRef={dialogRef} />
       <div
         className='h-full flex flex-col flex-1 justify-between'
         {...attributes}
@@ -62,19 +44,9 @@ export const TaskCard = ({ task }: Props) => {
       >
         <h3 className='font-bold text-left line-clamp-2'>{task.title}</h3>
         <p>{task.endDate}</p>
-        {task.priority && (
-          <div className='absolute right-1 top-3'>
-            <Flag />
-          </div>
-        )}
+        {task.priority && <PriorityIndicator />}
       </div>
-      <FormTask
-        columnName={task.status}
-        task={task}
-        dialogRef={dialogRef}
-        openDialog={openDialog}
-        closeDialog={closeDialog}
-      />
+      <TaskDialog columnName={task.status} task={task} dialogRef={dialogRef} />
     </li>
   )
 }
