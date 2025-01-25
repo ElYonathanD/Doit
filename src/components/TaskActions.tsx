@@ -1,3 +1,4 @@
+import { useDialog } from '../hooks/useDialog'
 import { useTaskStore } from '../store/tasks'
 import { Delete } from './icons/Delete'
 import { Pen } from './icons/Pen'
@@ -8,7 +9,7 @@ interface Props {
 }
 export const TaskActions = ({ taskId, dialogRef }: Props) => {
   const { deleteTask } = useTaskStore((state) => state)
-  const openDialog = () => dialogRef.current?.showModal()
+  const { openDialog } = useDialog(dialogRef)
 
   return (
     <div className='absolute right-1 bottom-3 flex gap-2 items-center'>

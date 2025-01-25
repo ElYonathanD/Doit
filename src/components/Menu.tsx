@@ -5,6 +5,7 @@ import { useTaskStore } from '../store/tasks'
 import { Delete } from './icons/Delete'
 import { Column } from '../interfaces/column'
 import { Pen } from './icons/Pen'
+import { useDialog } from '../hooks/useDialog'
 
 interface Props {
   column: Column
@@ -14,8 +15,7 @@ export const Menu = ({ column, dialogRefColumn }: Props) => {
   const [menuOpen, setMenuOpen] = useState(false)
   const { deleteColumn } = useColumnStore((state) => state)
   const { deleteTasksByColumn } = useTaskStore((state) => state)
-
-  const openDialog = () => dialogRefColumn.current?.showModal()
+  const { openDialog } = useDialog(dialogRefColumn)
 
   return (
     <div className='absolute right-1 top-1 z-10'>

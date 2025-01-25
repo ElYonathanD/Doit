@@ -3,6 +3,7 @@ import { Plus } from './icons/Plus'
 import { Task } from '../interfaces/task'
 import { useRef } from 'react'
 import { TaskForm } from './TaskForm'
+import { useDialog } from '../hooks/useDialog'
 
 interface Props {
   columnName: string
@@ -12,8 +13,8 @@ interface Props {
 export const TaskDialog = ({ columnName, task, dialogRef }: Props) => {
   const inputTitleRef = useRef<HTMLInputElement>(null)
 
-  const openDialog = () => dialogRef.current?.showModal()
-  const closeDialog = () => dialogRef.current?.close()
+  const { openDialog, closeDialog } = useDialog(dialogRef)
+
   return (
     <>
       {!task && (

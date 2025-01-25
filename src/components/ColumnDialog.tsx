@@ -3,6 +3,7 @@ import { Close } from './icons/Close'
 import { Plus } from './icons/Plus'
 import { Column } from '../interfaces/column'
 import { ColumnForm } from './ColumnForm'
+import { useDialog } from '../hooks/useDialog'
 
 interface Props {
   column?: Column
@@ -11,8 +12,7 @@ interface Props {
 
 export const ColumnDialog = ({ column, dialogRefColum }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null)
-  const openDialog = () => dialogRefColum.current?.showModal()
-  const closeDialog = () => dialogRefColum.current?.close()
+  const { openDialog, closeDialog } = useDialog(dialogRefColum)
   return (
     <>
       {!column && (
