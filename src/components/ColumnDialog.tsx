@@ -21,7 +21,7 @@ export const ColumnDialog = ({ column, dialogRefColum }: Props) => {
             openDialog()
             inputRef.current?.focus()
           }}
-          className='p-4 bg-slate-200 rounded-lg w-36 dark:bg-gray-700 hover:bg-slate-100 dark:hover:bg-slate-800 sm:w-40 md:w-48 lg:w-56'
+          className='p-4 bg-slate-200 rounded-lg w-36 dark:bg-gray-800 hover:bg-slate-300 dark:hover:bg-slate-900 sm:w-40 md:w-48 lg:w-56'
           aria-label='Abrir diálogo de creación'
         >
           <Plus />

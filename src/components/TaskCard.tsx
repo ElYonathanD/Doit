@@ -33,10 +33,9 @@ export const TaskCard = ({ task }: Props) => {
     <li
       ref={setNodeRef}
       style={style}
-      className={`text-left text-sm sm:text-base bg-slate-100 mt-4 p-3 rounded-lg list-none h-28 min-h-24 w-full relative dark:bg-gray-800 dark:text-white
-      shadow-slate-500 shadow-sm dark:shadow-none ${
+      className={`text-left text-sm sm:text-base bg-white dark:bg-gray-700 p-4 rounded-lg list-none h-32 min-h-28 w-full relative shadow-md hover:shadow-lg transition-shadow duration-200 ${
         isDragging
-          ? 'opacity-50 border-2 border-black dark:border-slate-100'
+          ? 'opacity-50 border-2 border-dashed border-slate-500 dark:border-slate-400'
           : ''
       }`}
     >
@@ -46,15 +45,15 @@ export const TaskCard = ({ task }: Props) => {
         {...attributes}
         {...listeners}
       >
-        <h3 className='font-bold text-left line-clamp-2 w-11/12'>
+        <h3 className='font-bold text-left line-clamp-2 w-11/12 text-slate-800 dark:text-slate-200'>
           {task.title}
         </h3>
         <p
           style={{
-            background: isPastOrToday ? 'red' : 'green',
-            borderColor: isPastOrToday ? '#ffabab' : '#31c80c'
+            background: isPastOrToday ? '#ef4444' : '#10b981',
+            borderColor: isPastOrToday ? '#fca5a5' : '#34d399'
           }}
-          className='w-fit rounded-xl px-2 text-white border-[1px]'
+          className='w-fit rounded-full px-3 py-1 text-white text-xs font-medium'
         >
           {task.endDate}
         </p>
