@@ -51,7 +51,7 @@ export const useFormTask = (
           priority: false
         })
       } else {
-        editTask(formTask)
+        editTask({ ...formTask, status: columnName })
       }
 
       closeDialog()
